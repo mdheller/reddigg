@@ -1,8 +1,9 @@
 import Head from 'next/head';
-import Header from './Header';
 import { Grid } from 'react-bootstrap';
 
-export default (props) => (
+import Header from './Header';
+
+export default props => (
   <div>
     <Head>
       <title>Reddigg</title>
@@ -10,6 +11,7 @@ export default (props) => (
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossOrigin="anonymous" />
     </Head>
     <Grid>
+      <Header />
       {props.children}
     </Grid>
   </div>

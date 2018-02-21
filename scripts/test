@@ -1,0 +1,4 @@
+#!/bin/sh
+ESLINT=node_modules/.bin/eslint
+
+$ESLINT server.js

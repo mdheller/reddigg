@@ -2,7 +2,8 @@
   "name": "reddigg",
   "version": "1.0.0",
   "scripts": {
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "test": "scripts/test"
   },
   "repository": "git@github.com:indocomsoft/reddigg.git",
   "author": "Julius Putra Tanu Setiaji <indocomsoft@gmail.com>",

@@ -1,4 +1,7 @@
 #!/bin/sh
-ESLINT=node_modules/.bin/eslint
+BASE_DIR=node_modules/.bin
+ESLINT=$BASE_DIR/eslint
+JEST=$BASE_DIR/jest
 
 $ESLINT server.js components/** pages/**
+$JEST

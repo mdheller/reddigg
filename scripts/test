@@ -3,5 +3,6 @@ BASE_DIR=node_modules/.bin
 ESLINT=$BASE_DIR/eslint
 JEST=$BASE_DIR/jest
 
-$ESLINT server.js components/** pages/**
-$JEST
+$ESLINT server.js components/** pages/** __tests__/**
+$JEST --coverage
+cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js

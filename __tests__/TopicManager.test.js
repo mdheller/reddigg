@@ -57,3 +57,80 @@ describe('get', () => {
 });
 
 
+describe('upvote', () => {
+  const tm = new TopicManager();
+  tm.add('1');
+  tm.add('2');
+  tm.add('3');
+  tm.add('4');
+  it('topic upvoted rose to the top', () => {
+    tm.upvote(2);
+    expect(tm.rank[0]).toEqual(tm.get(2));
+  });
+  it('another topic upvoted more rose to the top', () => {
+    tm.upvote(1);
+    tm.upvote(1);
+    expect(tm.rank[0]).toEqual(tm.get(1));
+  });
+  it('new topic added is put after insertion point', () => {
+    tm.add('5');
+    expect(tm.rank[tm.insertion_point - 1]).toEqual(tm.get(4));
+  });
+});
+
+describe('downvote', () => {
+  const tm = new TopicManager();
+  tm.add('1');
+  tm.add('2');
+  tm.add('3');
+  tm.add('4');
+  it('topic downvoted sank to the bottom', () => {
+    tm.downvote(2);
+    expect(tm.rank[tm.topics.length - 1]).toEqual(tm.get(2));
+  });
+  it('another topic downvoted more sank to the bottom', () => {
+    tm.downvote(1);
+    tm.downvote(1);
+    expect(tm.rank[tm.topics.length - 1]).toEqual(tm.get(1));
+  });
+  it('new topic added is put after insertion point', () => {
+    tm.add('5');
+    expect(tm.rank[tm.insertion_point - 1]).toEqual(tm.get(4));
+  });
+});
+
+describe('combined up/downvote', () => {
+  const tm = new TopicManager();
+  tm.add('1');
+  tm.add('2');
+  tm.add('3');
+  tm.add('4');
+  it('topic upvoted rose to the top', () => {
+    tm.upvote(1);
+    expect(tm.rank[0]).toEqual(tm.get(1));
+  });
+  it('same topic downvoted twice sank to the bottom', () => {
+    tm.downvote(1);
+    tm.downvote(1);
+    expect(tm.rank[tm.topics.length - 1]).toEqual(tm.get(1));
+  });
+  it('same topic upvoted twice rose to the top', () => {
+    tm.upvote(1);
+    tm.upvote(1);
+    expect(tm.rank[0]).toEqual(tm.get(1));
+  });
+  it('another topic upvoted twice rose to the top', () => {
+    tm.upvote(2);
+    tm.upvote(2);
+    expect(tm.rank[0]).toEqual(tm.get(2));
+  });
+  it('another topic downvoted sank to the bottom', () => {
+    tm.downvote(0);
+    expect(tm.rank[tm.topics.length - 1]).toEqual(tm.get(0));
+  });
+  it('another topic downvoted twice sank to the bottom', () => {
+    tm.downvote(3);
+    tm.downvote(3);
+    expect(tm.rank[tm.topics.length - 1]).toEqual(tm.get(3));
+  });
+});

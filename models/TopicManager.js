@@ -35,17 +35,14 @@ class TopicManager {
     // Loop to find the index of topic in this.rank and who to swap
     for (let i = 0; i < this.rank.length; i += 1) {
       if (this.rank[i] === topic) rankId = i;
-      console.log(i);
       // The one to swap with is the earliest occurrence of topic with lower score
       if (swapId === undefined && this.rank[i].score < topic.score) swapId = i;
       if (swapId !== undefined && rankId !== undefined) break;
     }
     if (swapId === undefined) swapId = this.rank.length - 1;
-    console.log(`rankId ${rankId} swapId ${swapId}`);
     if ((swapId > rankId && this.rank[swapId].score > this.rank[rankId].score)
       || (swapId < rankId && this.rank[swapId].score < this.rank[rankId].score)) {
-      console.log('swap');
-      let temp = this.rank[rankId];
+      const temp = this.rank[rankId];
       this.rank[rankId] = this.rank[swapId];
       this.rank[swapId] = temp;
     }

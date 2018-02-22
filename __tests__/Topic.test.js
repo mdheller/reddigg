@@ -2,7 +2,7 @@
 import Topic from '../models/Topic';
 
 describe('given valid topic', () => {
-  const t = new Topic('asd');
+  const t = new Topic('asd', 0);
   it('is created', () => {
     expect(t).toBeTruthy();
   });
@@ -11,6 +11,9 @@ describe('given valid topic', () => {
   });
   it('has the correct title', () => {
     expect(t.title).toBe('asd');
+  });
+  it('has the correct id', () => {
+    expect(t.id).toBe(0);
   });
 });
 

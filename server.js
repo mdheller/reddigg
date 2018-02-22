@@ -1,3 +1,11 @@
+// Backend
+const backend = require('./backend');
+
+backend.listen(5678, () => {
+  console.log('Backend started on http://localhost:5678');
+});
+
+// Frontend
 const express = require('express');
 const next = require('next');
 

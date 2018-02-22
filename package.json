@@ -9,11 +9,13 @@
   "author": "Julius Putra Tanu Setiaji <indocomsoft@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "next": "^5.0.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "supertest": "^3.0.0"
   },
   "devDependencies": {
     "babel-jest": "^22.4.0",

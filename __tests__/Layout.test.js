@@ -19,8 +19,17 @@ describe('<Head>', () => {
     const expected = (<meta name="viewport" content="initial-scale=1.0, width=device-width" />);
     expect(head.contains(expected)).toBe(true);
   });
-  it('included bootstrap stylesheet', () => {
-    const expected = expect.stringMatching(/bootstrap.min.css$/);
-    expect(head.find('link[rel="stylesheet"]').prop('href')).toEqual(expected);
+  describe('Stylesheet', () => {
+    const stylesheets = head.find('link[rel="stylesheet"]').map(e => e.prop('href'));
+    it('includes bootstrap stylesheet', () => {
+      expect(stylesheets
+        .filter(a => a.match(/bootstrap.min.css$/)))
+        .toHaveLength(1);
+    });
+    it('includes fontawesome stylesheet', () => {
+      expect(stylesheets
+        .filter(a => a.match(/font-awesome.min.css$/)))
+        .toHaveLength(1);
+    });
   });
 });

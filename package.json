@@ -11,10 +11,14 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "isomorphic-unfetch": "^2.0.0",
+    "jquery": "^3.3.1",
     "next": "^5.0.0",
+    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
+    "react-fontawesome": "^1.6.1",
     "supertest": "^3.0.0"
   },
   "devDependencies": {

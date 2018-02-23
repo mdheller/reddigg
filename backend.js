@@ -22,9 +22,6 @@ const tryAction = (res, action) => {
   }
 };
 
-app.get('/', (req, res) => {
-  res.status(200).json({ success: true, message: 'Welcome to the reddigg back-end!' });
-});
 
 app.get('/all', (req, res) => {
   res.status(200).json({ success: true, topics: tm.rank });
@@ -45,10 +42,6 @@ app.put('/upvote/:id', (req, res) => {
 
 app.put('/downvote/:id', (req, res) => {
   tryAction(res, () => { tm.downvote(req.params.id); });
-});
-
-app.all('*', (req, res) => {
-  res.status(404).json({ success: false, error: 'No method' });
 });
 
 module.exports = app;

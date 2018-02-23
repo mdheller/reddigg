@@ -32,14 +32,6 @@ const expectFailure = async (response) => {
   expect(response.text.success).toBe(false);
 };
 
-describe('GET /', () => {
-  it('should respond with 200 OK with welcome message', async () => {
-    const response = await requestAndParse('get', '/');
-    expect(response.statusCode).toBe(200);
-    expect(response.text.message).toBe('Welcome to the reddigg back-end!');
-  });
-});
-
 describe('GET /all', () => {
   it('should return all topics', async () => {
     const response = await requestAndParse('get', '/all');
@@ -91,16 +83,4 @@ describe('PUT /downvote', () => {
     const response = await requestAndParse('put', '/downvote/1');
     expectFailure(response);
   });
-});
-
-describe('non-existent methods', () => {
-  const check404 = method => async () => {
-    const response = await requestAndParse(method, '/asd');
-    expect(response.statusCode).toBe(404);
-    expect(response.text.success).toBe(false);
-    expect(response.text.error).toBe('No method');
-  };
-  it('should return HTTP 404 at unknown GET', check404('get'));
-  it('should return HTTP 404 at unknown PUT', check404('put'));
-  it('should return HTTP 404 at unknown POST', check404('post'));
 });

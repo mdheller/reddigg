@@ -53,7 +53,6 @@ describe('get', () => {
   });
 });
 
-
 describe('up/downvote', () => {
   let tm;
   const expectTop = (id) => {
@@ -100,33 +99,40 @@ describe('up/downvote', () => {
     });
   });
   describe('combined up/downvote', () => {
-    it('topic upvoted rose to the top', () => {
+    it('case 1', () => {
+      let tmp;
       tm.upvote(1);
       expectTop(1);
-    });
-    it('same topic downvoted twice sank to the bottom', () => {
+      tmp = tm.insertion_point;
       tm.downvote(1);
       tm.downvote(1);
       expectBottom(1);
-    });
-    it('same topic upvoted twice rose to the top', () => {
+      expect(tm.insertion_point).toBe(tmp - 1);
+      tmp = tm.insertion_point;
       tm.upvote(1);
       tm.upvote(1);
       expectTop(1);
-    });
-    it('another topic upvoted twice rose to the top', () => {
+      expect(tm.insertion_point).toBe(tmp + 1);
       tm.upvote(2);
       tm.upvote(2);
       expectTop(2);
-    });
-    it('another topic downvoted sank to the bottom', () => {
       tm.downvote(0);
       expectBottom(0);
-    });
-    it('another topic downvoted twice sank to the bottom', () => {
       tm.downvote(3);
       tm.downvote(3);
       expectBottom(3);
+    });
+    it('case 2', () => {
+      tm.upvote(0);
+      tm.upvote(1);
+      tm.downvote(0);
+      expectTop(1);
+    });
+    it('case 3', () => {
+      tm.downvote(0);
+      tm.downvote(1);
+      tm.upvote(1);
+      expectBottom(0);
     });
   });
 });

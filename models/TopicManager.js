@@ -27,26 +27,15 @@ class TopicManager {
     if (this.get(id).score === 0) this.insertion_point -= 1;
     this.adjust(id, -1);
   }
+  swap(id1, id2) {
+    const temp = this.rank[id1];
+    this.rank[id1] = this.rank[id2];
+    this.rank[id2] = temp;
+  }
   adjust(id, amount) {
     const topic = this.get(id);
     topic.score += amount;
-    let rankId;
-    let swapId;
-    // Loop to find the index of topic in this.rank and who to swap
-    for (let i = 0; i < this.rank.length; i += 1) {
-      if (this.rank[i] === topic) rankId = i;
-      // The one to swap with is the earliest occurrence of topic with lower score
-      if (swapId === undefined && this.rank[i].score < topic.score) swapId = i;
-      // Stop if both swapId and rankId have been found
-      if (swapId !== undefined && rankId !== undefined) break;
-    }
-    if (swapId === undefined) swapId = this.rank.length - 1;
-    if ((swapId > rankId && this.rank[swapId].score > this.rank[rankId].score)
-      || (swapId < rankId && this.rank[swapId].score < this.rank[rankId].score)) {
-      const temp = this.rank[rankId];
-      this.rank[rankId] = this.rank[swapId];
-      this.rank[swapId] = temp;
-    }
+    this.rank.sort((t1, t2) => t2.score - t1.score);
   }
 }
 

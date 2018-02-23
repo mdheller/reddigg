@@ -10,6 +10,9 @@ import TopicForm from '../components/TopicForm';
 import AlertDismissable from '../components/AlertDismissable';
 
 class Index extends React.Component {
+  static reload() {
+    window.location.replace(window.location.href);
+  }
   static async getInitialProps({ req }) {
     const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
     const res = await fetch(`${baseUrl}/all`);
@@ -29,15 +32,11 @@ class Index extends React.Component {
         url: `/${act}/${id}`,
         type: 'PUT',
       })
-        .done((msg) => {
-          if (msg.success) {
-            window.location.reload();
-          } else {
-            this.setState({ alertText: `Failed to ${act}. Please try again!`, alertShow: true });
-          }
+        .done(() => {
+          Index.reload();
         })
-        .fail(() => {
-          this.setState({ alertText: 'Connection failed. Please try again!', alertShow: true });
+        .fail((jqxhr) => {
+          this.setState({ alertText: `${jqxhr.readyState === 0 ? 'No connection' : `${act} failed`}. Please try again!`, alertShow: true });
         });
     };
   }

@@ -43,6 +43,10 @@ app.put('/upvote/:id', (req, res) => {
   tryAction(res, () => { tm.upvote(req.params.id); });
 });
 
+app.put('/downvote/:id', (req, res) => {
+  tryAction(res, () => { tm.downvote(req.params.id); });
+});
+
 app.all('*', (req, res) => {
   res.status(404).json({ success: false, error: 'No method' });
 });

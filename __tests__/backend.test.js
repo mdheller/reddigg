@@ -71,9 +71,24 @@ describe('PUT /upvote', () => {
   it('should upvote a valid topic', async () => {
     const response = await requestAndParse('put', '/upvote/0');
     expectSuccess(response);
+    const { topics } = (await requestAndParse('get', '/all')).text;
+    expect(topics[0].score).toBe(1);
   });
   it('should reject invalid topic id', async () => {
     const response = await requestAndParse('put', '/upvote/1');
+    expectFailure(response);
+  });
+});
+
+describe('PUT /downvote', () => {
+  it('should downvote a valid topic', async () => {
+    const response = await requestAndParse('put', '/downvote/0');
+    expectSuccess(response);
+    const { topics } = (await requestAndParse('get', '/all')).text;
+    expect(topics[0].score).toBe(0);
+  });
+  it('should reject invalid topic id', async () => {
+    const response = await requestAndParse('put', '/downvote/1');
     expectFailure(response);
   });
 });

@@ -6,6 +6,9 @@ import $ from 'jquery';
 import AlertDismissable from './AlertDismissable';
 
 class TopicForm extends React.Component {
+  static reload() {
+    window.location.replace(window.location.href);
+  }
   constructor(props, context) {
     super(props, context);
     this.handleChange = this.handleChange.bind(this);
@@ -27,15 +30,11 @@ class TopicForm extends React.Component {
     e.preventDefault();
     if (this.getValidationState() !== 'error') {
       $.post('/new', { title: this.state.title })
-        .done((msg) => {
-          if (msg.success) {
-            window.location.replace(window.location.href);
-          } else {
-            this.setState({ alertText: 'Failed to submit page. Please try again!', alertShow: true });
-          }
+        .done(() => {
+          TopicForm.reload();
         })
-        .fail(() => {
-          this.setState({ alertText: 'Connection failed. Please try again!', alertShow: true });
+        .fail((jqxhr) => {
+          this.setState({ alertText: `${jqxhr.readyState === 0 ? 'No connection' : 'Submission failed'}. Please try again!`, alertShow: true });
         });
     }
   }

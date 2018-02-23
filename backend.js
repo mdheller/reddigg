@@ -9,6 +9,10 @@ const tm = new TopicManager();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const throwError = (res, e) => {
+  res.status(400).json({ success: false, error: e });
+};
+
 app.get('/', (req, res) => {
   res.status(200).json({ success: true, message: 'Welcome to the reddigg back-end!' });
 });
@@ -23,12 +27,12 @@ app.post('/new', (req, res) => {
     try {
       tm.add(req.body.title);
     } catch (e) {
-      res.status(400).json({ success: false, error: e });
+      throwError(res, e);
       return;
     }
     res.status(200).json({ success: true });
   } else {
-    res.status(400).json({ success: false, error: 'Empty request' });
+    throwError(res, 'Empty request');
   }
 });
 
@@ -36,7 +40,7 @@ app.put('/upvote/:id', (req, res) => {
   try {
     tm.upvote(req.params.id);
   } catch (e) {
-    res.status(400).json({ success: false, error: e });
+    throwError(res, e);
     return;
   }
   res.status(200).json({ success: true });

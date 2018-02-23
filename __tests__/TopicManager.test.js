@@ -21,24 +21,21 @@ describe('constructor', () => {
 
 describe('add', () => {
   const tm = new TopicManager();
+  const expectAdd = (length) => {
+    expect(tm.topics).toHaveLength(length);
+    expect(tm.rank).toHaveLength(length);
+    expect(tm.insertion_point).toBe(length);
+  };
   it('adds one topic', () => {
-    expect(tm.topics).toHaveLength(0);
-    expect(tm.rank).toHaveLength(0);
-    expect(tm.insertion_point).toBe(0);
+    expectAdd(0);
     tm.add('qwerty');
-    expect(tm.topics).toHaveLength(1);
-    expect(tm.rank).toHaveLength(1);
-    expect(tm.insertion_point).toBe(1);
+    expectAdd(1);
     expect(tm.topics).toContainEqual(new Topic('qwerty', 0));
   });
   it('adds one more topic', () => {
-    expect(tm.topics).toHaveLength(1);
-    expect(tm.rank).toHaveLength(1);
-    expect(tm.insertion_point).toBe(1);
+    expectAdd(1);
     tm.add('asdfgh');
-    expect(tm.topics).toHaveLength(2);
-    expect(tm.rank).toHaveLength(2);
-    expect(tm.insertion_point).toBe(2);
+    expectAdd(2);
     expect(tm.topics).toContainEqual(new Topic('asdfgh', 1));
   });
 });
@@ -56,6 +53,12 @@ describe('get', () => {
   });
 });
 
+const expectTop = (tm, id) => {
+  expect(tm.rank[0]).toEqual(tm.get(id));
+};
+const expectBottom = (tm, id) => {
+  expect(tm.rank[tm.rank.length - 1]).toEqual(tm.get(id));
+};
 
 describe('upvote', () => {
   const tm = new TopicManager();
@@ -65,12 +68,12 @@ describe('upvote', () => {
   tm.add('4');
   it('topic upvoted rose to the top', () => {
     tm.upvote(2);
-    expect(tm.rank[0]).toEqual(tm.get(2));
+    expectTop(tm, 2);
   });
   it('another topic upvoted more rose to the top', () => {
     tm.upvote(1);
     tm.upvote(1);
-    expect(tm.rank[0]).toEqual(tm.get(1));
+    expectTop(tm, 1);
   });
   it('new topic added is put after insertion point', () => {
     tm.add('5');
@@ -86,12 +89,12 @@ describe('downvote', () => {
   tm.add('4');
   it('topic downvoted sank to the bottom', () => {
     tm.downvote(2);
-    expect(tm.rank[tm.topics.length - 1]).toEqual(tm.get(2));
+    expectBottom(tm, 2);
   });
   it('another topic downvoted more sank to the bottom', () => {
     tm.downvote(1);
     tm.downvote(1);
-    expect(tm.rank[tm.topics.length - 1]).toEqual(tm.get(1));
+    expectBottom(tm, 1);
   });
   it('new topic added is put after insertion point', () => {
     tm.add('5');
@@ -107,30 +110,30 @@ describe('combined up/downvote', () => {
   tm.add('4');
   it('topic upvoted rose to the top', () => {
     tm.upvote(1);
-    expect(tm.rank[0]).toEqual(tm.get(1));
+    expectTop(tm, 1);
   });
   it('same topic downvoted twice sank to the bottom', () => {
     tm.downvote(1);
     tm.downvote(1);
-    expect(tm.rank[tm.topics.length - 1]).toEqual(tm.get(1));
+    expectBottom(tm, 1);
   });
   it('same topic upvoted twice rose to the top', () => {
     tm.upvote(1);
     tm.upvote(1);
-    expect(tm.rank[0]).toEqual(tm.get(1));
+    expectTop(tm, 1);
   });
   it('another topic upvoted twice rose to the top', () => {
     tm.upvote(2);
     tm.upvote(2);
-    expect(tm.rank[0]).toEqual(tm.get(2));
+    expectTop(tm, 2);
   });
   it('another topic downvoted sank to the bottom', () => {
     tm.downvote(0);
-    expect(tm.rank[tm.topics.length - 1]).toEqual(tm.get(0));
+    expectBottom(tm, 0);
   });
   it('another topic downvoted twice sank to the bottom', () => {
     tm.downvote(3);
     tm.downvote(3);
-    expect(tm.rank[tm.topics.length - 1]).toEqual(tm.get(3));
+    expectBottom(tm, 3);
   });
 });

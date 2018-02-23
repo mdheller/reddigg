@@ -27,11 +27,6 @@ class TopicManager {
     if (this.get(id).score === 0) this.insertion_point -= 1;
     this.adjust(id, -1);
   }
-  swap(id1, id2) {
-    const temp = this.rank[id1];
-    this.rank[id1] = this.rank[id2];
-    this.rank[id2] = temp;
-  }
   adjust(id, amount) {
     const topic = this.get(id);
     topic.score += amount;

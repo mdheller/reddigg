@@ -29,7 +29,7 @@ class TopicForm extends React.Component {
       $.post('/new', { title: this.state.title })
         .done((msg) => {
           if (msg.success) {
-            window.location.reload();
+            window.location.replace(window.location.href);
           } else {
             this.setState({ alertText: 'Failed to submit page. Please try again!', alertShow: true });
           }

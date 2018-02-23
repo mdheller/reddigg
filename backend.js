@@ -10,11 +10,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.status(200).send('Welcome to the reddigg back-end!');
+  res.status(200).json({ success: true, message: 'Welcome to the reddigg back-end!' });
 });
 
 app.get('/all', (req, res) => {
-  res.status(200).json({ topics: tm.rank });
+  res.status(200).json({ success: true, topics: tm.rank });
 });
 
 app.post('/new', (req, res) => {

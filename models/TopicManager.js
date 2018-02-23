@@ -33,13 +33,15 @@ class TopicManager {
     let rankId;
     let swapId;
     // Loop to find the index of topic in this.rank and who to swap
-    for (let i = 0; i < this.rank.length; i += 1) {
+    // Stop when end of array is reached or both swapId and rankId have been found
+    for (let i = 0; i < this.rank.length || (swapId === undefined && rankId === undefined); i += 1) {
       if (this.rank[i] === topic) rankId = i;
       // The one to swap with is the earliest occurrence of topic with lower score
       if (swapId === undefined && this.rank[i].score < topic.score) swapId = i;
-      if (swapId !== undefined && rankId !== undefined) break;
     }
+    // If swapId is not found, swap with the last element of the array
     if (swapId === undefined) swapId = this.rank.length - 1;
+    // Only swap if the order is wrong
     if ((swapId > rankId && this.rank[swapId].score > this.rank[rankId].score)
       || (swapId < rankId && this.rank[swapId].score < this.rank[rankId].score)) {
       const temp = this.rank[rankId];

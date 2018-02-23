@@ -13,6 +13,15 @@ const throwError = (res, e) => {
   res.status(400).json({ success: false, error: e });
 };
 
+const tryAction = (res, action) => {
+  try {
+    action();
+    res.status(200).json({ success: true });
+  } catch (e) {
+    throwError(res, e);
+  }
+};
+
 app.get('/', (req, res) => {
   res.status(200).json({ success: true, message: 'Welcome to the reddigg back-end!' });
 });
@@ -24,26 +33,14 @@ app.get('/all', (req, res) => {
 app.post('/new', (req, res) => {
   // Validate request
   if (req.body.title !== undefined) {
-    try {
-      tm.add(req.body.title);
-    } catch (e) {
-      throwError(res, e);
-      return;
-    }
-    res.status(200).json({ success: true });
+    tryAction(res, () => { tm.add(req.body.title); });
   } else {
     throwError(res, 'Empty request');
   }
 });
 
 app.put('/upvote/:id', (req, res) => {
-  try {
-    tm.upvote(req.params.id);
-  } catch (e) {
-    throwError(res, e);
-    return;
-  }
-  res.status(200).json({ success: true });
+  tryAction(res, () => { tm.upvote(req.params.id); });
 });
 
 app.all('*', (req, res) => {

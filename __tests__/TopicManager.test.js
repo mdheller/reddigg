@@ -53,87 +53,81 @@ describe('get', () => {
   });
 });
 
-const expectTop = (tm, id) => {
-  expect(tm.rank[0]).toEqual(tm.get(id));
-};
-const expectBottom = (tm, id) => {
-  expect(tm.rank[tm.rank.length - 1]).toEqual(tm.get(id));
-};
 
-describe('upvote', () => {
-  const tm = new TopicManager();
-  tm.add('1');
-  tm.add('2');
-  tm.add('3');
-  tm.add('4');
-  it('topic upvoted rose to the top', () => {
-    tm.upvote(2);
-    expectTop(tm, 2);
+describe('up/downvote', () => {
+  let tm;
+  const expectTop = (id) => {
+    expect(tm.rank[0]).toEqual(tm.get(id));
+  };
+  const expectBottom = (id) => {
+    expect(tm.rank[tm.rank.length - 1]).toEqual(tm.get(id));
+  };
+  beforeEach(() => {
+    tm = new TopicManager();
+    tm.add('1');
+    tm.add('2');
+    tm.add('3');
+    tm.add('4');
   });
-  it('another topic upvoted more rose to the top', () => {
-    tm.upvote(1);
-    tm.upvote(1);
-    expectTop(tm, 1);
+  describe('upvote', () => {
+    it('topic upvoted rose to the top', () => {
+      tm.upvote(2);
+      expectTop(2);
+    });
+    it('another topic upvoted more rose to the top', () => {
+      tm.upvote(1);
+      tm.upvote(1);
+      expectTop(1);
+    });
+    it('new topic added is put after insertion point', () => {
+      tm.add('5');
+      expect(tm.rank[tm.insertion_point - 1]).toEqual(tm.get(4));
+    });
   });
-  it('new topic added is put after insertion point', () => {
-    tm.add('5');
-    expect(tm.rank[tm.insertion_point - 1]).toEqual(tm.get(4));
+  describe('downvote', () => {
+    it('topic downvoted sank to the bottom', () => {
+      tm.downvote(2);
+      expectBottom(2);
+    });
+    it('another topic downvoted more sank to the bottom', () => {
+      tm.downvote(1);
+      tm.downvote(1);
+      expectBottom(1);
+    });
+    it('new topic added is put after insertion point', () => {
+      tm.add('5');
+      expect(tm.rank[tm.insertion_point - 1]).toEqual(tm.get(4));
+    });
+  });
+  describe('combined up/downvote', () => {
+    it('topic upvoted rose to the top', () => {
+      tm.upvote(1);
+      expectTop(1);
+    });
+    it('same topic downvoted twice sank to the bottom', () => {
+      tm.downvote(1);
+      tm.downvote(1);
+      expectBottom(1);
+    });
+    it('same topic upvoted twice rose to the top', () => {
+      tm.upvote(1);
+      tm.upvote(1);
+      expectTop(1);
+    });
+    it('another topic upvoted twice rose to the top', () => {
+      tm.upvote(2);
+      tm.upvote(2);
+      expectTop(2);
+    });
+    it('another topic downvoted sank to the bottom', () => {
+      tm.downvote(0);
+      expectBottom(0);
+    });
+    it('another topic downvoted twice sank to the bottom', () => {
+      tm.downvote(3);
+      tm.downvote(3);
+      expectBottom(3);
+    });
   });
 });
 
-describe('downvote', () => {
-  const tm = new TopicManager();
-  tm.add('1');
-  tm.add('2');
-  tm.add('3');
-  tm.add('4');
-  it('topic downvoted sank to the bottom', () => {
-    tm.downvote(2);
-    expectBottom(tm, 2);
-  });
-  it('another topic downvoted more sank to the bottom', () => {
-    tm.downvote(1);
-    tm.downvote(1);
-    expectBottom(tm, 1);
-  });
-  it('new topic added is put after insertion point', () => {
-    tm.add('5');
-    expect(tm.rank[tm.insertion_point - 1]).toEqual(tm.get(4));
-  });
-});
-
-describe('combined up/downvote', () => {
-  const tm = new TopicManager();
-  tm.add('1');
-  tm.add('2');
-  tm.add('3');
-  tm.add('4');
-  it('topic upvoted rose to the top', () => {
-    tm.upvote(1);
-    expectTop(tm, 1);
-  });
-  it('same topic downvoted twice sank to the bottom', () => {
-    tm.downvote(1);
-    tm.downvote(1);
-    expectBottom(tm, 1);
-  });
-  it('same topic upvoted twice rose to the top', () => {
-    tm.upvote(1);
-    tm.upvote(1);
-    expectTop(tm, 1);
-  });
-  it('another topic upvoted twice rose to the top', () => {
-    tm.upvote(2);
-    tm.upvote(2);
-    expectTop(tm, 2);
-  });
-  it('another topic downvoted sank to the bottom', () => {
-    tm.downvote(0);
-    expectBottom(tm, 0);
-  });
-  it('another topic downvoted twice sank to the bottom', () => {
-    tm.downvote(3);
-    tm.downvote(3);
-    expectBottom(tm, 3);
-  });
-});

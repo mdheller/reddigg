@@ -53,16 +53,3 @@ describe('upvote', () => {
     expect(app.find(AlertDismissable).prop('text')).toBe('No connection. Please try again!');
   });
 });
-
-describe('getInitialProps', () => {
-  it('with req', async () => {
-    global.fetch.mockResponse(JSON.stringify({ topics }));
-    const props = await App.getInitialProps({ req: { protocol: 'http', get: () => 'localhost' } });
-    expect(props).toEqual({ topics });
-  });
-  it('empty req', async () => {
-    global.fetch.mockResponse(JSON.stringify({ topics }));
-    const props = await App.getInitialProps({});
-    expect(props).toEqual({ topics });
-  });
-});

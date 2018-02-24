@@ -1,7 +1,6 @@
 /* eslint-env browser */
 import React from 'react';
 import PropTypes from 'prop-types';
-import fetch from 'isomorphic-unfetch';
 import $ from 'jquery';
 import { Button, Table } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
@@ -11,12 +10,6 @@ import AlertDismissable from './AlertDismissable';
 class TopicTable extends React.Component {
   static reload() {
     window.location.replace(window.location.href);
-  }
-  static async getInitialProps({ req }) {
-    const baseUrl = req ? `${req.protocol}://${req.get('Host')}` : '';
-    const res = await fetch(`${baseUrl}/all`);
-    const data = await res.json();
-    return { topics: data.topics.slice(0, 20) };
   }
   constructor(props, context) {
     super(props, context);
@@ -57,8 +50,8 @@ class TopicTable extends React.Component {
           <tbody>
             {this.props.topics.map(topic => (
               <tr key={topic.id}>
-                <td>{topic.title }</td>
-                <td>{topic.score }</td>
+                <td>{topic.title}</td>
+                <td>{topic.score}</td>
                 <td>
                   <Button onClick={this.action('upvote', topic.id)}>
                     <FontAwesome name="arrow-up" size="2x" />

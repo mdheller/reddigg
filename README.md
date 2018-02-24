@@ -39,3 +39,8 @@ The data structure used is JavaScript Array. The reasoning is that JavaScript is
 - Enzyme
 - Sinon
 - jest-fetch-mock
+### Miscellaneous
+- ESLint for Linting, using Airbnb style guide
+- TravisCI for Continuous Integration
+- Coveralls for Code Coverage monitoring
+- Codacy for automated code review

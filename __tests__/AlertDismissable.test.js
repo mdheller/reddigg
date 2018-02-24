@@ -6,14 +6,19 @@ import { Alert, Button } from 'react-bootstrap';
 
 import App from '../components/AlertDismissable';
 
-const app = shallow(<App />);
 
 it('is by default hidden', () => {
+  const app = shallow(<App />);
   expect(app.text()).toBe('');
 });
 
-it('contains one <Alert> element', () => {
+let app;
+beforeEach(() => {
+  app = shallow(<App />);
   app.setProps({ show: true });
+});
+
+it('contains one <Alert> element', () => {
   expect(app.find(Alert)).toHaveLength(1);
 });
 

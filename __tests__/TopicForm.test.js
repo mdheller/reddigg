@@ -9,8 +9,8 @@ import AlertDismissable from '../components/AlertDismissable';
 
 const handleChangeSpy = sinon.spy(App.prototype, 'handleChange');
 const submitSpy = sinon.spy(App.prototype, 'submit');
-let app;
 
+let app;
 beforeEach(() => {
   app = shallow(<App />);
   handleChangeSpy.resetHistory();
@@ -65,9 +65,11 @@ describe('<form>', () => {
 it('has one <FormGroup>', () => {
   expect(app.find(FormGroup)).toHaveLength(1);
 });
+
 it('has one <ControlLabel>', () => {
   expect(app.find(ControlLabel)).toHaveLength(1);
 });
+
 describe('has one <FormControl>', () => {
   let formcontrol;
   beforeEach(() => {

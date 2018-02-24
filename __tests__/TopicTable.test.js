@@ -10,10 +10,9 @@ import AlertDismissable from '../components/AlertDismissable';
 
 import App from '../components/TopicTable';
 
-let app;
 const topics = [{ id: 0, title: 'abc', score: 0 }, { id: 1, title: 'asd', score: 1 }];
-global.fetch = require('jest-fetch-mock');
 
+let app;
 beforeEach(() => {
   app = shallow(<App topics={topics} />);
 });

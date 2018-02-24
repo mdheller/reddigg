@@ -55,12 +55,6 @@ describe('get', () => {
 
 describe('up/downvote', () => {
   let tm;
-  const expectTop = (id) => {
-    expect(tm.rank[0]).toEqual(tm.get(id));
-  };
-  const expectBottom = (id) => {
-    expect(tm.rank[tm.rank.length - 1]).toEqual(tm.get(id));
-  };
   beforeEach(() => {
     tm = new TopicManager();
     tm.add('1');
@@ -68,6 +62,13 @@ describe('up/downvote', () => {
     tm.add('3');
     tm.add('4');
   });
+  const expectTop = (id) => {
+    expect(tm.rank[0]).toEqual(tm.get(id));
+  };
+  const expectBottom = (id) => {
+    expect(tm.rank[tm.rank.length - 1]).toEqual(tm.get(id));
+  };
+
   describe('upvote', () => {
     it('topic upvoted rose to the top', () => {
       tm.upvote(2);
@@ -136,4 +137,3 @@ describe('up/downvote', () => {
     });
   });
 });
-

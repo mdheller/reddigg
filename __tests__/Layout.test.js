@@ -6,12 +6,21 @@ import Head from 'next/head';
 
 import App from '../components/Layout';
 
-const app = shallow(<App />);
+let app;
+beforeEach(() => {
+  app = shallow(<App />);
+});
+
 it('renders one <Head> element', () => {
   expect(app.find(Head)).toHaveLength(1);
 });
+
 describe('<Head>', () => {
-  const head = app.find(Head);
+  let head;
+  beforeEach(() => {
+    head = app.find(Head);
+  });
+
   it('has one <title>', () => {
     expect(head.find('title')).toHaveLength(1);
   });
@@ -20,7 +29,11 @@ describe('<Head>', () => {
     expect(head.contains(expected)).toBe(true);
   });
   describe('Stylesheet', () => {
-    const stylesheets = head.find('link[rel="stylesheet"]').map(e => e.prop('href'));
+    let stylesheets;
+    beforeEach(() => {
+      stylesheets = head.find('link[rel="stylesheet"]').map(e => e.prop('href'));
+    });
+
     it('includes bootstrap stylesheet', () => {
       expect(stylesheets
         .filter(a => a.match(/bootstrap.min.css$/)))

@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 import Layout from '../components/Layout';
 import TopicForm from '../components/TopicForm';
 import TopicTable from '../components/TopicTable';
@@ -8,7 +9,9 @@ const Index = props => (
   <div>
     <Layout>
       <TopicForm />
+      <h1>Top 20 Topics</h1>
       <TopicTable topics={props.topics} />
+      <Link href="/pages"><a>See more topics</a></Link>
     </Layout>
   </div>
 );

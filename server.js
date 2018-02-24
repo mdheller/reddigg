@@ -10,6 +10,10 @@ const handle = app.getRequestHandler();
 
 app.prepare()
   .then(() => {
+    backend.get('/pages/:no', (req, res) => {
+      app.render(req, res, '/pages', { pageNo: req.params.no });
+    });
+
     backend.get('*', (req, res) => handle(req, res));
 
     backend.listen(3000, (err) => {

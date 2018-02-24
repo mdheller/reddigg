@@ -41,14 +41,6 @@ Pages.getInitialProps = async ({ req, query }) => {
   return { topics: data.topics.slice((pageNo - 1) * 20, pageNo * 20), pageNo };
 };
 
-// Pages.getInitialProps = async ({ query, req }) => {
-//   const res = await fetch(`${baseUrl}/all}`);
-//   const data = await res.json();
-//   // If page number not specified, use assume page 1
-//   const pageNo = query.pageNo ? parseInt(query.pageNo, 10) : 1;
-//   return { topics: data.topics.slice(pageNo * 20, (pageNo * 20) + 20), pageNo };
-// };
-
 Pages.propTypes = {
   topics: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,

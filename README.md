@@ -6,7 +6,7 @@ A reddit/digg clone (hence the portmanteau name) for Carousell Coding Exercise.
 A topic aggregator application -- users can submit topics and upvote/downvote topics.
 The homepage shows the top 20 topics sorted by score.
 
-Try it out at https://reddigg-nxbrbdducj.now.sh
+Try it out at https://reddigg-pykbbjxyfr.now.sh
 
 Proudly written using vim.
 

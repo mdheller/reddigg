@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-unfetch';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+
 import Layout from '../components/Layout';
 import TopicForm from '../components/TopicForm';
 import TopicTable from '../components/TopicTable';

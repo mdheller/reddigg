@@ -10,6 +10,7 @@ const handle = app.getRequestHandler();
 
 app.prepare()
   .then(() => {
+    // ROUTING
     backend.get('/pages/:no', (req, res) => {
       app.render(req, res, '/pages', { pageNo: req.params.no });
     });

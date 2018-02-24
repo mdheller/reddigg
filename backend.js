@@ -24,6 +24,8 @@ const tryAction = (res, action) => {
   }
 };
 
+
+// ROUTING
 // Fetch all topics
 app.get('/all', (req, res) => {
   res.status(200).json({ success: true, topics: tm.rank });

@@ -6,6 +6,7 @@
     "react/jsx-filename-extension": 0,
     "react/react-in-jsx-scope": 0,
     "react/prop-types": [2, { "ignore": ["children"] }],
-    "no-console": ["error", { "allow": ["log", "error"] }]
+    "no-console": ["error", { "allow": ["log", "error"] }],
+    "no-multi-spaces": ["error", { "ignoreEOLComments": true }]
   }
 }
